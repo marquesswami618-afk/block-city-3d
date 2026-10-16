@@ -59,6 +59,11 @@ server.listen(PORT, '127.0.0.1', () => {
   setTimeout(launchGame, 700);
 });
 server.on('error', err => {
+  if (err.code === 'EADDRINUSE') {
+    console.log('O servidor já está aberto; abrindo o jogo existente.');
+    launchGame();
+    return;
+  }
   console.error('Não foi possível iniciar o jogo:', err.message);
   process.exitCode = 1;
 });
